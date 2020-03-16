@@ -3,6 +3,7 @@ import com.perfecto.sampleproject.Utils;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -40,7 +41,6 @@ public class PerfectoSelenium {
 		driver = new RemoteWebDriver(new URL("https://" + Utils.fetchCloudName(cloudName) + ".perfectomobile.com/nexperience/perfectomobile/wd/hub"), capabilities);
 		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 		driver.manage().timeouts().pageLoadTimeout(15, TimeUnit.SECONDS);
-		// Reporting client. For more details, see https://developers.perfectomobile.com/display/PD/Java
 		PerfectoExecutionContext perfectoExecutionContext;
 		if(System.getProperty("reportium-job-name") != null) {
 			perfectoExecutionContext = new PerfectoExecutionContext.PerfectoExecutionContextBuilder()
@@ -63,11 +63,9 @@ public class PerfectoSelenium {
 		driver.get(System.getProperty("rolloutUrl"));
 		reportiumClient.stepEnd();
 
-		reportiumClient.stepStart("Verify title");
-		String aTitle = driver.getTitle();
+		reportiumClient.stepStart("Verify Home Page");
 		//compare the actual title with the expected title
-		if (!aTitle.equals("Harness Sample To-Do List Registration"))
-			throw new RuntimeException("Title is mismatched");
+		reportiumClient.reportiumAssert("verify home page", driver.findElement(By.xpath("//a[text()='Try Harness For Free']")).isDisplayed());
 		reportiumClient.stepEnd();
 
 	}
