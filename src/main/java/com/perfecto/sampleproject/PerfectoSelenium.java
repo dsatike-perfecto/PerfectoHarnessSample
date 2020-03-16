@@ -66,7 +66,7 @@ public class PerfectoSelenium {
 		reportiumClient.stepStart("Verify title");
 		String aTitle = driver.getTitle();
 		//compare the actual title with the expected title
-		if (!aTitle.equals("Web & Mobile App Testing | Continuous Testing | Perfecto"))
+		if (!aTitle.equals("Harness Sample To-Do List Registration"))
 			throw new RuntimeException("Title is mismatched");
 		reportiumClient.stepEnd();
 
